@@ -15,7 +15,7 @@
       </li> 
       <li><a href="#" class="order order-gray"><span>Relatorios</span></a>
         <ul>
-          <li><a href="">Relatorios de Credito</a></li> 
+          <li><a href="/financas/receitas/relatorio">Relatorios de Credito</a></li> 
           <li><a href="">Relatorios de Debitos</a></li>
           <li><a href="">Fechamento do Mes</a></li>
         </ul>

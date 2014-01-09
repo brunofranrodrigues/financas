@@ -44,29 +44,38 @@ class ReceitasController extends AppController {
 		
 		$params='';
 		
-		if (!is_null($usuario)){
+
+		if ((!is_null($usuario)) and (!is_null($categoria)) and (!is_null($periodo))) {
+				$params = array(
+				'conditions' => array(
+				'Receita.usuario_id' => $usuario,
+				'Receita.cartipo_id' => $categoria,
+				'Receita.data_pg LIKE' => $periodo
+	 			),
+			);
+
+		} elseif ((!is_null($usuario)) and (!is_null($categoria))) {
+				$params = array(
+				'conditions' => array(
+				'Receita.usuario_id' => $usuario,
+				'Receita.cartipo_id' => $categoria
+	 			),
+			);
+		} elseif ((!is_null($usuario)) and (!is_null($periodo))) {
+				$params = array(
+				'conditions' => array(
+				'Receita.usuario_id' => $usuario,
+				'Receita.data_pg LIKE' => $periodo
+	 			),
+			);
+		} elseif (!is_null($usuario)) {
 				$params = array(
 				'conditions' => array(
 				'Receita.usuario_id' => $usuario,
 	 			),
 			);
 		}
-
-		if (!is_null($categoria)){
-				$params = array(
-				'conditions' => array(
-				'Receita.cartipo_id' => $categoria,
-	 			),
-			);
-		}
-
-		if (!is_null($periodo)){
-				$params = array(
-				'conditions' => array(
-				'Receita.data_pg LIKE' => $periodo
-	 			),
-			);
-		}
+		
 
 		if ($this->request->is('post')) {
 			$this->set('receitas', $this->Receita->find('all', $params));
