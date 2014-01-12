@@ -16,9 +16,29 @@ class BalancetesController extends AppController {
 	public $components = array('Paginator');
 
 
-	function financas_import() {
-        $messages = $this->Balancete->import('extrato.csv');
-        //debug($messages);
+	// function financas_import() {
+ //        $messages = $this->Balancete->import('extrato.txt');
+ //        //debug($messages);
+ //    }
+
+    public function financas_upload() {
+    	if ($this->request->is('post')) {
+     	$allowedExts = array("txt", "csv");        	
+        $extension = end(explode(".", $_FILES["arquivo"]["name"]));
+        			 
+        if ((($_FILES["arquivo"]["type"] == "text/plain") 
+        	|| ($_FILES["arquivo"]["type"] == "text/csv")) 
+        	&& ($_FILES["arquivo"]["size"] < 20000) 
+        	&& in_array($extension, $allowedExts))
+        	{
+            	$uploaddir = WWW_ROOT. 'files' . DS;
+				if (move_uploaded_file($_FILES['arquivo']['tmp_name'], $uploaddir . $_FILES['arquivo']['name'])) {
+					$this->Session->setFlash(__('Upload feito com sucesso.'));
+				} else {
+					$this->Session->setFlash(__('Erro no processo de Upload'));
+				}
+    		}
+    	} 
     }
 
 /**
@@ -38,7 +58,7 @@ class BalancetesController extends AppController {
 //  * @param string $id
 //  * @return void
 //  */
-// 	public function financas_view($id = null) {
+// 	public function view($id = null) {
 // 		if (!$this->Balancete->exists($id)) {
 // 			throw new NotFoundException(__('Invalid balancete'));
 // 		}
@@ -61,6 +81,8 @@ class BalancetesController extends AppController {
 				$this->Session->setFlash(__('The balancete could not be saved. Please, try again.'));
 			}
 		}
+		$situacoes = $this->Balancete->Situacao->find('list');
+		$this->set(compact('situacoes'));
 	}
 
 /**
@@ -85,6 +107,8 @@ class BalancetesController extends AppController {
 			$options = array('conditions' => array('Balancete.' . $this->Balancete->primaryKey => $id));
 			$this->request->data = $this->Balancete->find('first', $options);
 		}
+		$situacoes = $this->Balancete->Situacao->find('list');
+		$this->set(compact('situacoes'));
 	}
 
 /**

@@ -4,24 +4,6 @@
 
 if (!empty($_POST)) {
 
-if(!empty($_POST['ReceitaUsuarioId'])) {
-	$usuario = $_POST['ReceitaUsuarioId'];
-} else {
-	$usuario = null;
-}
-
-if(!empty($_POST['ReceitaCartipoId'])) {
-	$categoria = $_POST['ReceitaCartipoId'];
-} else {
-	$categoria = null;
-}
-
-if(!empty($_POST['ReceitaPeriodo'])) {
-	$periodo = $_POST['ReceitaPeriodo'];
-} else {
-	$periodo = null;
-}
-
 echo'<div id="conteudo">
 	<div class="wrapper">
 	<div class="receitas form">
@@ -80,13 +62,14 @@ echo '</table>
 
 echo '<div id="conteudo">
 <div class="wrapper">
-<div class="receitas form">';
+<div class="receitas form">
+<h2>Contas a Receber</h2>';
 echo $this->Form->create('Receita',array( 'action' => 'relatorio' ));
 echo '<fieldset>
-		<legend>Pesquisar Receita</legend>';	
+		<legend>Relatorio Receita</legend>';	
 		echo $this->Form->input("usuario_id", array('empty' => 'Escolha uma opcao', 'label' => 'Usuario', 'name' =>'ReceitaUsuarioId', 'id' =>'ReceitaUsuarioId'));
-    	echo $this->Form->input('cartipo_id', array('empty' => 'Escolha uma opcao', 'label' => 'Tipo', 'name' =>'ReceitaCartipoId', 'id' =>'ReceitaCartipoId'));
-    	echo $this->Form->input('periodo', array('label' => 'Periodo', 'size' => '7', 'maxlength' => '9' , 'name' =>'ReceitaPeriodo', 'id' =>'ReceitaPeriodo'));
+    	echo $this->Form->input('cartipo_id', array('empty' => 'Escolha uma opcao', 'label' => 'Tipo', 'name' =>'ReceitaCartipoId', 'id' =>'ReceitaCartipoId', 'required'=>'required'));
+    	echo $this->Form->input('periodo', array('label' => 'Periodo', 'size' => '7', 'maxlength' => '9' , 'name' =>'ReceitaPeriodo', 'id' =>'ReceitaPeriodo', 'required'=>'required'));
 echo '</fieldset>';
 echo $this->Form->end(__('Pesquisar'));	
 }

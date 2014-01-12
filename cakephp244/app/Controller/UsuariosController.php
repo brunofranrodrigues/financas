@@ -51,6 +51,26 @@ class UsuariosController extends AppController {
 // 		$this->set('usuario', $this->Usuario->find('first', $options));
 // 	}
 
+
+public function financas_pesquisa() {
+	if ($this->request->is('post')) {
+	$searchtype = $_POST['searchtype'];
+	$value = $_POST['searchuser'];
+	$results = $this->Usuario->find('all', array('fields' => array(
+																'Usuario.id',
+																'Usuario.nome',
+																'Usuario.email',
+																'Usuario.created',
+																'Usuario.modified'
+																),
+												'order' => 'Usuario.id ASC',
+												'conditions' => array($searchtype . ' ' . 'LIKE' => '%'.$value.'%')
+											));
+	$this->set('results', $results);
+	}
+
+}
+
 /**
  * add method
  *

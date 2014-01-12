@@ -16,15 +16,15 @@
       <li><a href="#" class="order order-gray"><span>Relatorios</span></a>
         <ul>
           <li><a href="/financas/receitas/relatorio">Relatorios de Credito</a></li> 
-          <li><a href="">Relatorios de Debitos</a></li>
+          <li><a href="/financas/despesas/relatorio">Relatorios de Debitos</a></li>
           <li><a href="">Fechamento do Mes</a></li>
         </ul>
       </li> 
       <li><a href="#" class="order order-gray"><span>Importar</span></a>
         <ul> 
-          <li><a href="">Enviar Extrato</a></li>
+          <li><a href="/financas/balancetes/upload">Enviar Extrato</a></li>
           <li><a href="/financas/balancetes/index">Listar Importacao</a></li>
-          <li><a href="">Sincronizar Importação</a></li>        
+          <li><a href="/financas/sincronizacoes/sinc">Sincronizar Importação</a></li>        
         </ul> 
       </li>
       <li><a href="#" class="order order-gray"><span>Usuarios</span></a>

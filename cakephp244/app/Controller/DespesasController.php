@@ -40,6 +40,36 @@ class DespesasController extends AppController {
 // 		$this->set('despesa', $this->Despesa->find('first', $options));
 // 	}
 
+	public function financas_relatorio() {
+		
+		$params='';
+
+		if ($this->request->is('post')) {
+
+			$usuario = $_POST['DespesaUsuarioId'];
+			$categoria = $_POST['DespesaCapgtipoId'];
+			$periodo = $_POST['DespesaPeriodo'];
+
+			if ((!is_null($usuario)) and (!is_null($categoria)) and (!is_null($periodo))) {
+                                $params = array(
+                                'conditions' => array(
+                                'Despesa.usuario_id' => $usuario,
+                                'Despesa.capgtipo_id' => $categoria,
+                                'Despesa.data_pg LIKE' => '%'.$periodo.'%'
+                                 ),
+                        );
+
+                } else {
+                	$this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));	
+                }
+			$this->set('despesas', $this->Despesa->find('all', $params));
+		}
+		$capgtipos = $this->Despesa->Capgtipo->find('list');
+		$usuarios = $this->Despesa->Usuario->find('list');
+		$situacoes = $this->Despesa->Situacao->find('list');
+		$this->set(compact('capgtipos', 'usuarios', 'situacoes'));
+	}
+
 /**
  * add method
  *

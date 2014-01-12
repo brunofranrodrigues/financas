@@ -40,44 +40,28 @@ class ReceitasController extends AppController {
 // 		$this->set('receita', $this->Receita->find('first', $options));
 // 	}
 
-	public function financas_relatorio($usuario=null,$categoria=null,$periodo=null) {
+	public function financas_relatorio() {
 		
 		$params='';
-		
-
-		if ((!is_null($usuario)) and (!is_null($categoria)) and (!is_null($periodo))) {
-				$params = array(
-				'conditions' => array(
-				'Receita.usuario_id' => $usuario,
-				'Receita.cartipo_id' => $categoria,
-				'Receita.data_pg LIKE' => $periodo
-	 			),
-			);
-
-		} elseif ((!is_null($usuario)) and (!is_null($categoria))) {
-				$params = array(
-				'conditions' => array(
-				'Receita.usuario_id' => $usuario,
-				'Receita.cartipo_id' => $categoria
-	 			),
-			);
-		} elseif ((!is_null($usuario)) and (!is_null($periodo))) {
-				$params = array(
-				'conditions' => array(
-				'Receita.usuario_id' => $usuario,
-				'Receita.data_pg LIKE' => $periodo
-	 			),
-			);
-		} elseif (!is_null($usuario)) {
-				$params = array(
-				'conditions' => array(
-				'Receita.usuario_id' => $usuario,
-	 			),
-			);
-		}
-		
 
 		if ($this->request->is('post')) {
+
+			$usuario = $_POST['ReceitaUsuarioId'];
+			$categoria = $_POST['ReceitaCartipoId'];
+			$periodo = $_POST['ReceitaPeriodo'];
+
+			if ((!is_null($usuario)) and (!is_null($categoria)) and (!is_null($periodo))) {
+                                $params = array(
+                                'conditions' => array(
+                                'Receita.usuario_id' => $usuario,
+                                'Receita.cartipo_id' => $categoria,
+                                'Receita.data_pg LIKE' => '%'.$periodo.'%'
+                                 ),
+                        );
+
+                } else {
+                	$this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));	
+                }
 			$this->set('receitas', $this->Receita->find('all', $params));
 		}
 		$cartipos = $this->Receita->Cartipo->find('list');

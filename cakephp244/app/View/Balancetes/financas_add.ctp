@@ -12,6 +12,7 @@
 		echo $this->Form->input('databalanco');
 		echo $this->Form->input('numdoc');
 		echo $this->Form->input('valor');
+		echo $this->Form->input('situacao_id', array('empty' => 'Escolha um status'));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Salvar')); ?>
