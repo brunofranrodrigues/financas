@@ -42,7 +42,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 			<div class="wrapper">
 				<h1>Logo do Cliente</h1>
 				<div id="dados-login-topo">
-				 <p>Usuário:<b></b> | <b><?php echo date('d/m/Y H:i'); ?></b> | <a href="/financas/usuarios/logout" id="logout-link">Logout</a></p>
+				 <p>Usuário:<b> </b> | <b><?php echo date('d/m/Y H:i'); ?></b> | <a href="/financas/usuarios/logout" id="logout-link">Logout</a></p>
 				</div>
 			</div>
 		</div>

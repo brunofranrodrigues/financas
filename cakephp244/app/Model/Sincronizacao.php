@@ -21,8 +21,7 @@ class Sincronizacao extends AppModel{
 
 		{
 
-			@$conn = mysql_connect("localhost","root","maxmax");
-			@$conexao = mysql_select_db("db_financas",$conn);
+			$db = ConnectionManager::getDataSource('default');
 
 			$data[0] = str_ireplace('/', '-', $data[0]);
 
@@ -34,20 +33,19 @@ class Sincronizacao extends AppModel{
 				$situacao = '4';
 			}
 
-			$import="INSERT into balancetes values('','$data[0]','$data[1]','$data[2]','$data[3]','$data[4]','$data[5]','$situacao')";
-
-			mysql_query($import) or die(mysql_error());
+			$db->rawQuery("INSERT into balancetes values('','$data[0]','$data[1]','$data[2]','$data[3]','$data[4]','$data[5]','$situacao')");
 
 		}
 
 		fclose($handle);
+
 		@$conn = mysql_connect("localhost","root","maxmax");
 		@$conexao = mysql_select_db("db_financas",$conn);
 		
 		//Busca todos os registro com situacao de credito e formata o campo data no padrao do mysql
 		$result = mysql_query("select historico,valor,str_to_date(data, '%m-%d-%Y') as DATA_F from balancetes where situacao_id = '4';");
 		if (!$result) {
-			echo 'Não foi possível executar a consulta: ' . mysql_error();
+			$this->Session->setFlash(__('Não foi possível executar a consulta: '));
 			exit;
 		}
 
@@ -57,8 +55,7 @@ class Sincronizacao extends AppModel{
 		$row1 = mysql_fetch_array($querycar);
 		$totalcar = $row1['num_registros'];
 		if ($totalcar == "0"){
-			echo '<p class="erro" style="margin:auto;"> Nao existe registros de CREDITO para importar</p>
-			</br>';
+			$this->Session->setFlash(__('Nao existe registros de CREDITO para importar'));
 		}else {
 
 			for ($i=0;$i <= $totalcar;$i++) {
@@ -71,20 +68,21 @@ class Sincronizacao extends AppModel{
 
 		}
 
+		//Busca todos os registro com situacao de debito e formata o campo data no padrao do mysql
 		$resultcapg = mysql_query("select historico, str_to_date(data, '%m-%d-%Y') as DATA_ven, valor, str_to_date(data, '%m-%d-%Y') as DATA_pg from balancetes where situacao_id = '1';");
 		if (!$resultcapg) {
-			echo 'Não foi possível executar a consulta: ' . mysql_error();
+			$this->Session->setFlash(__('Não foi possível executar a consulta: '));
 			exit;
 		}
 
+		//Sincroniza os dados entre a tabela de balancetes e a de despesas.
 		$strCountcapg = "SELECT COUNT(*) AS num_registros from balancetes where situacao_id = '1';";
 		$querycapg = mysql_query($strCountcapg);
 		$row2 = mysql_fetch_array($querycapg);
 		$totalcapg = $row2['num_registros'];
 
 		if ($totalcapg == "0"){
-			echo '<p class="erro" style="margin:auto;"> Nao existe registros de DEBITO para importar</p>
-			</br>';
+			$this->Session->setFlash(__('Nao existe registros de DEBITO para importar'));
 		}else {
 
 			for ($i=0;$i <= $totalcapg;$i++) {

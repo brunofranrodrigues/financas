@@ -49,10 +49,12 @@ class SituacoesController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Situacao->create();
 			if ($this->Situacao->save($this->request->data)) {
-				$this->Session->setFlash(__('The situacao has been saved.'));
+				$this->Session->setFlash(__('The situacao has been saved.'), 'default', array('class' => 'success'));
+			}
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The situacao could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The situacao could not be saved. Please, try again.'), 'default', array('class' => 'success'));
+			}
 			}
 		}
 	}
@@ -70,10 +72,12 @@ class SituacoesController extends AppController {
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Situacao->save($this->request->data)) {
-				$this->Session->setFlash(__('The situacao has been saved.'));
+				$this->Session->setFlash(__('The situacao has been saved.'), 'default', array('class' => 'success'));
+			}
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The situacao could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The situacao could not be saved. Please, try again.'), 'default', array('class' => 'success'));
+			}
 			}
 		} else {
 			$options = array('conditions' => array('Situacao.' . $this->Situacao->primaryKey => $id));
@@ -95,9 +99,11 @@ class SituacoesController extends AppController {
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Situacao->delete()) {
-			$this->Session->setFlash(__('The situacao has been deleted.'));
+			$this->Session->setFlash(__('The situacao has been deleted.'), 'default', array('class' => 'success'));
+			}
 		} else {
-			$this->Session->setFlash(__('The situacao could not be deleted. Please, try again.'));
+			$this->Session->setFlash(__('The situacao could not be deleted. Please, try again.'), 'default', array('class' => 'success'));
+			}
 		}
 		return $this->redirect(array('action' => 'index'));
 	}}

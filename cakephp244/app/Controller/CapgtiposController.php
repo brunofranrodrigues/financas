@@ -49,10 +49,12 @@ class CapgtiposController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Capgtipo->create();
 			if ($this->Capgtipo->save($this->request->data)) {
-				$this->Session->setFlash(__('The capgtipo has been saved.'));
+				$this->Session->setFlash(__('The capgtipo has been saved.'), 'default', array('class' => 'success'));
+			}
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The capgtipo could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The capgtipo could not be saved. Please, try again.'), 'default', array('class' => 'success'));
+			}
 			}
 		}
 	}
@@ -70,10 +72,12 @@ class CapgtiposController extends AppController {
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Capgtipo->save($this->request->data)) {
-				$this->Session->setFlash(__('The capgtipo has been saved.'));
+				$this->Session->setFlash(__('The capgtipo has been saved.'), 'default', array('class' => 'success'));
+			}
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The capgtipo could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The capgtipo could not be saved. Please, try again.'), 'default', array('class' => 'success'));
+			}
 			}
 		} else {
 			$options = array('conditions' => array('Capgtipo.' . $this->Capgtipo->primaryKey => $id));
@@ -95,9 +99,11 @@ class CapgtiposController extends AppController {
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Capgtipo->delete()) {
-			$this->Session->setFlash(__('The capgtipo has been deleted.'));
+			$this->Session->setFlash(__('The capgtipo has been deleted.'), 'default', array('class' => 'success'));
+			}
 		} else {
-			$this->Session->setFlash(__('The capgtipo could not be deleted. Please, try again.'));
+			$this->Session->setFlash(__('The capgtipo could not be deleted. Please, try again.'), 'default', array('class' => 'success'));
+			}
 		}
 		return $this->redirect(array('action' => 'index'));
 	}}

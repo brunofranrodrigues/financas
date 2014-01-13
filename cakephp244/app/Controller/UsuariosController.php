@@ -19,7 +19,7 @@ class UsuariosController extends AppController {
 
 	public function financas_login() { if ($this->Auth->login()) {
 		$this->redirect($this->Auth->redirect()); } else {
-		$this->Session->setFlash('Dados incorretos!'); }
+		$this->Session->setFlash(__('Dados incorretos!'), 'default', array('class' => 'success')); }
 	}
 
 	public function financas_logout() { 
@@ -80,10 +80,10 @@ public function financas_pesquisa() {
 		if ($this->request->is('post')) {
 			$this->Usuario->create();
 			if ($this->Usuario->save($this->request->data)) {
-				$this->Session->setFlash(__('The usuario has been saved.'));
+				$this->Session->setFlash(__('The usuario has been saved.'), 'default', array('class' => 'success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The usuario could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The usuario could not be saved. Please, try again.'), 'default', array('class' => 'success'));
 			}
 		}
 	}
@@ -101,10 +101,10 @@ public function financas_pesquisa() {
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Usuario->save($this->request->data)) {
-				$this->Session->setFlash(__('The usuario has been saved.'));
+				$this->Session->setFlash(__('The usuario has been saved.'), 'default', array('class' => 'success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The usuario could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The usuario could not be saved. Please, try again.'), 'default', array('class' => 'success'));
 			}
 		} else {
 			$options = array('conditions' => array('Usuario.' . $this->Usuario->primaryKey => $id));
@@ -126,9 +126,9 @@ public function financas_pesquisa() {
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Usuario->delete()) {
-			$this->Session->setFlash(__('The usuario has been deleted.'));
+			$this->Session->setFlash(__('The usuario has been deleted.'), 'default', array('class' => 'success'));
 		} else {
-			$this->Session->setFlash(__('The usuario could not be deleted. Please, try again.'));
+			$this->Session->setFlash(__('The usuario could not be deleted. Please, try again.'), 'default', array('class' => 'success'));
 		}
 		return $this->redirect(array('action' => 'index'));
 	}}

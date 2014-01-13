@@ -10,9 +10,9 @@ class SincronizacoesController extends AppController {
 		$filename = WWW_ROOT. 'files' . DS . 'extrato.txt';
 
 		if (file_exists($filename)) {
-			$this->set('vw_dados',$this->Sincronizacao->executaSinc('extrato.txt'));
+			$this->Sincronizacao->executaSinc('extrato.txt');
 		} else {
-			$this->Session->setFlash(__('O arquivo para a importacao nao existe'));
+			$this->Session->setFlash(__('O arquivo para a importacao nao existe'), 'default', array('class' => 'success'));
 		}
 		
 

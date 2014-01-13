@@ -15,12 +15,6 @@ class BalancetesController extends AppController {
  */
 	public $components = array('Paginator');
 
-
-	// function financas_import() {
- //        $messages = $this->Balancete->import('extrato.txt');
- //        //debug($messages);
- //    }
-
     public function financas_upload() {
     	if ($this->request->is('post')) {
      	$allowedExts = array("txt", "csv");        	
@@ -33,9 +27,9 @@ class BalancetesController extends AppController {
         	{
             	$uploaddir = WWW_ROOT. 'files' . DS;
 				if (move_uploaded_file($_FILES['arquivo']['tmp_name'], $uploaddir . $_FILES['arquivo']['name'])) {
-					$this->Session->setFlash(__('Upload feito com sucesso.'));
+					$this->Session->setFlash(__('Upload feito com sucesso.'), 'default', array('class' => 'success'));
 				} else {
-					$this->Session->setFlash(__('Erro no processo de Upload'));
+					$this->Session->setFlash(__('Erro no processo de Upload'), 'default', array('class' => 'success'));
 				}
     		}
     	} 
@@ -75,10 +69,10 @@ class BalancetesController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Balancete->create();
 			if ($this->Balancete->save($this->request->data)) {
-				$this->Session->setFlash(__('The balancete has been saved.'));
+				$this->Session->setFlash(__('The balancete has been saved.'), 'default', array('class' => 'success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The balancete could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The balancete could not be saved. Please, try again.'), 'default', array('class' => 'success'));
 			}
 		}
 		$situacoes = $this->Balancete->Situacao->find('list');
@@ -98,10 +92,10 @@ class BalancetesController extends AppController {
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Balancete->save($this->request->data)) {
-				$this->Session->setFlash(__('The balancete has been saved.'));
+				$this->Session->setFlash(__('The balancete has been saved.'), 'default', array('class' => 'success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The balancete could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The balancete could not be saved. Please, try again.'), 'default', array('class' => 'success'));
 			}
 		} else {
 			$options = array('conditions' => array('Balancete.' . $this->Balancete->primaryKey => $id));
@@ -125,9 +119,12 @@ class BalancetesController extends AppController {
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Balancete->delete()) {
-			$this->Session->setFlash(__('The balancete has been deleted.'));
+			$this->Session->setFlash(__('The balancete has been deleted.'), 'default', array('class' => 'success'));
+			
 		} else {
-			$this->Session->setFlash(__('The balancete could not be deleted. Please, try again.'));
-		}
+			$this->Session->setFlash(__('The balancete could not be deleted. Please, try again.'), 'default', array('class' => 'success'));
+			}
+		
 		return $this->redirect(array('action' => 'index'));
-	}}
+	}
+}

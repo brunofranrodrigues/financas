@@ -49,10 +49,11 @@ class CartiposController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Cartipo->create();
 			if ($this->Cartipo->save($this->request->data)) {
-				$this->Session->setFlash(__('The cartipo has been saved.'));
+				$this->Session->setFlash(__('The cartipo has been saved.'), 'default', array('class' => 'success'));
+			}
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The cartipo could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The cartipo could not be saved. Please, try again.'), 'default', array('class' => 'success'));
 			}
 		}
 	}
@@ -70,10 +71,12 @@ class CartiposController extends AppController {
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Cartipo->save($this->request->data)) {
-				$this->Session->setFlash(__('The cartipo has been saved.'));
+				$this->Session->setFlash(__('The cartipo has been saved.'), 'default', array('class' => 'success'));
+			}
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The cartipo could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The cartipo could not be saved. Please, try again.'), 'default', array('class' => 'success'));
+			}
 			}
 		} else {
 			$options = array('conditions' => array('Cartipo.' . $this->Cartipo->primaryKey => $id));
@@ -95,9 +98,10 @@ class CartiposController extends AppController {
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Cartipo->delete()) {
-			$this->Session->setFlash(__('The cartipo has been deleted.'));
+			$this->Session->setFlash(__('The cartipo has been deleted.'), 'default', array('class' => 'success'));
+			}
 		} else {
-			$this->Session->setFlash(__('The cartipo could not be deleted. Please, try again.'));
-		}
+			$this->Session->setFlash(__('The cartipo could not be deleted. Please, try again.'), 'default', array('class' => 'success'));
+			}
 		return $this->redirect(array('action' => 'index'));
 	}}
