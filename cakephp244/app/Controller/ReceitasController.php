@@ -60,9 +60,42 @@ class ReceitasController extends AppController {
                         );
 
                 } else {
-                        $this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));        
+                        $this->Session->setFlash(__('The receita could not be saved. Please, try again.'));        
                 }
                         $this->set('receitas', $this->Receita->find('all', $params));
+                }
+                $cartipos = $this->Receita->Cartipo->find('list');
+                $usuarios = $this->Receita->Usuario->find('list');
+                $situacoes = $this->Receita->Situacao->find('list');
+                $this->set(compact('cartipos', 'usuarios', 'situacoes'));
+        }
+
+        public function financas_fechar() {
+                
+                $params='';
+
+                if ($this->request->is('post')) {
+
+                        $usuario = $_POST['ReceitaUsuarioId'];
+                        $periodo = $_POST['ReceitaPeriodo'];
+
+                        if ((!is_null($usuario)) and (!is_null($periodo))) {
+                                $params = array(
+                                'conditions' => array(
+                                'Receita.usuario_id' => $usuario,
+                                'Receita.data_pg LIKE' => '%'.$periodo.'%'
+                                 ),
+                                'fields' => array('Receita.usuario_id', 
+                                    'Receita.data_pg', 
+                                    'SUM(Receita.valor_car) 
+                                    AS total'
+                                ),
+                        );
+
+                } else {
+                        $this->Session->setFlash(__('The receita could not be saved. Please, try again.'));        
+                }
+                        $this->set('receita', $this->Receita->find('first', $params));
                 }
                 $cartipos = $this->Receita->Cartipo->find('list');
                 $usuarios = $this->Receita->Usuario->find('list');
